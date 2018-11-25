@@ -27,11 +27,34 @@ if (command === "spotify-this-song") {
 }
 
 if(command === "movie-this"){
-
-// Then run a request with axios to the OMDB API with the movie specified
-axios.get("http://www.omdbapi.com/?t=" + userInputString + "&y=&plot=short&apikey=trilogy").then(
+// Run a request with axios to the OMDB API with the movie title
+axios.get("http://www.omdbapi.com/?t=" + userInputString + "&y=&plot=short&tomatoes=true&apikey=trilogy").then(
  function(response) {
-    console.log("The movie's rating is: " + response.data.imdbRating);
+     if (response.data.Title === undefined){
+        axios.get("http://www.omdbapi.com/?t=Mr.+Nobody&y=&plot=short&apikey=trilogy").then(
+  function(response) {
+    console.log("If you haven't seen Mr. Nobody, you should...");
+    console.log("Movie Title: " + response.data.Title);
+    console.log("This movie came out in: " + response.data.Year);
+    console.log("The movie's IMDB rating is: " + response.data.imdbRating);
+    console.log("The movie's Tomato rating is: " + response.data.tomatoRating);
+    console.log("The movie was produced in: " + response.data.Country);
+    console.log("The movie's language is: " + response.data.Language);
+    console.log("The movie's plot is: " + response.data.Plot);
+    console.log("Actors in this movie are: " + response.data.Actors);
+  }
+);
+     }
+     else{
+    console.log("Movie Title: " + response.data.Title);
+    console.log("This movie came out in: " + response.data.Year);
+    console.log("The movie's IMDB rating is: " + response.data.imdbRating);
+    console.log("The movie's Tomato rating is: " + response.data.tomatoRating);
+    console.log("The movie was produced in: " + response.data.Country);
+    console.log("The movie's language is: " + response.data.Language);
+    console.log("The movie's plot is: " + response.data.Plot);
+    console.log("Actors in this movie are: " + response.data.Actors);
+     }
   }
 );
 }
@@ -41,24 +64,3 @@ axios.get("http://www.omdbapi.com/?t=" + userInputString + "&y=&plot=short&apike
 
 // spotifyApi.setPromiseImplementation(Q);
 
-// // Basic Node application for requesting data from the OMDB website via axios
-// // Here we incorporate the "axios" npm package
-// var axios = require("axios");
-
-// // We then run the request with axios module on a URL with a JSON
-// axios.get("http://www.omdbapi.com/?t=remember+the+titans&y=&plot=short&apikey=trilogy").then(
-//   function(response) {
-//     // Then we print out the imdbRating
-//     console.log("The movie's rating is: " + response.data.imdbRating);
-//   }
-// );
-
-// Include the axios npm package (Don't forget to run "npm install axios" in this folder first!)
-// var axios = require("axios");
-
-// // Then run a request with axios to the OMDB API with the movie specified
-// axios.get("http://www.omdbapi.com/?t=remember+the+titans&y=&plot=short&apikey=trilogy").then(
-//   function(response) {
-//     console.log("The movie's rating is: " + response.data.imdbRating);
-//   }
-// );
