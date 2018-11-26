@@ -6,6 +6,11 @@ var Spotify = require('spotify-web-api-js');
 // File System package
 var fs = require('fs');
 
+var apiKeys = require('./keys.js')
+
+var spotifyID = apiKeys.spotify.id;
+var spotifySecret = apiKeys.spotify.secret;
+
 //Grab user input
 var command = process.argv[2];
 var userInput = process.argv[3];
@@ -15,17 +20,22 @@ var userInputString = JSON.stringify(userInput);
 
 
 
+
 //BANDS IN TOWN
-if (command === "concert-this"){
-axios.get("https://rest.bandsintown.com/artists/" + userInputString + "/events?app_id=codingbootcamp").then(
+function bandsintown(){
+axios.get("https://rest.bandsintown.com/artists/" + userInput + "/events?app_id=codingbootcamp").then(
     function(response) {
-        console.log(response);
+        // console.log(response);
+        console.log("Venue Name: " + response.data[0].venue.name);
+        console.log("Location: " + response.data[0].venue.city);
+        console.log("Venue Name: " + response.data[0].datetime);
      }
    );
-    }  
+    };
 
-
-
+if(command === "concert-this"){
+    bandsintown();
+}
 
 //MOVIE-THIS
 if(command === "movie-this"){
@@ -64,14 +74,40 @@ axios.get("http://www.omdbapi.com/?t=" + userInputString + "&y=&plot=short&tomat
 }
 
 // SPOTIFY
-if (command === "spotify-this-song") {
+// if (command === "spotify-this-song") {
+// getSpotify();
+// }
 
-}
 
-var options = new Spotify({
-    id: "SPOTIFY_ID",
-    secret: "SPOTIFY_SECRET"
-});
+// function getSpotify(){
+//     var options = new Spotify({
+//         id: spotifyID,
+//         secret: spotifySecret
+//     });
+// 	console.log("Spotifying your artist...")
+// 	console.log(userInputString);
+  //searches for "The Sign by Ace of Base" if no search term was entered
+// 	if (userInput ===  undefined || userInput ==="") {
+//   console.log("You didn't enter a song, so here's my favorite song!");
+// 	userInput = 'The Sign Ace of Base'
+// 	}; 
+
+// 	options.search({ type: 'track', query: userInputString }, function (err, data) {
+// 	if (err) {
+// 	  console.log('An error has occurred: ' + err)
+// 	} else {
+// 	for (let i = 0; i<data.tracks.items[0].artists.length; i++){
+//     	console.log("Artist: " + data.tracks.items[0].artists[i].name);
+//  	}
+// 	console.log("Song Name: " + data.tracks.items[0].name);
+//  	console.log("Preview: " + data.tracks.items[0].preview_url);
+//    	console.log("Album Name: " + (data.tracks.items[0].album.name));
+//   }
+
+//   });
+  
+// };
+
 
 // spotifyApi.setAccessToken('SPOTIFY_SECRET');
 // var spotify = new Spotify(keys.spotify);
@@ -95,7 +131,12 @@ fs.readFile("./random.txt",
          var contents = data;
          
          if (command === "do-what-it-says"){
-            console.log(contents);
+            var splitRandom = contents.split(",");
+            
+            // command = splitRandom[1];
+            // userInput = splitRandom[2];
+            console.log(splitRandom);
+
          }
      }
  });
