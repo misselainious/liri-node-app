@@ -1,10 +1,15 @@
 require("dotenv").config();
-// Include the axios npm package (Don't forget to run "npm install axios" in this folder first!)
+// Axios package
 var axios = require("axios");
 
 // var spotify = new Spotify(keys.spotify);
-
 var Spotify = require('spotify-web-api-js');
+
+var fs = require('fs');
+
+var command = process.argv[2];
+var userInput = process.argv[3];
+var userInputString = JSON.stringify(userInput);
 
 // spotifyApi.setAccessToken('SPOTIFY_SECRET');
 
@@ -15,11 +20,15 @@ var options = new Spotify({
 
 // var spotifier = Spotify(options);
 
-var command = process.argv[2];
-var userInput = process.argv[3];
 
-var userInputString = JSON.stringify(userInput);
-
+//Bands In Town
+if (command === "concert-this"){
+axios.get("https://rest.bandsintown.com/artists/" + userInputString + "/events?app_id=codingbootcamp").then(
+    function(response) {
+        console.log(response);
+     }
+   );
+    }  
 
 
 if (command === "spotify-this-song") {
@@ -64,3 +73,18 @@ axios.get("http://www.omdbapi.com/?t=" + userInputString + "&y=&plot=short&tomat
 
 // spotifyApi.setPromiseImplementation(Q);
 
+//DO WHAT IT SAYS:
+
+fs.readFile("./random.txt", 
+             {"encoding": "utf8"}, 
+              function(err, data) {
+     if (err)
+        console.log(err);
+     else {
+         var contents = data;
+         
+         if (command === "do-what-it-says"){
+            console.log(contents);
+         }
+     }
+ });
