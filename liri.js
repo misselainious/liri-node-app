@@ -2,7 +2,7 @@ require("dotenv").config();
 // Axios package
 var axios = require("axios");
 // Spotify package
-var Spotify = require('spotify-web-api-js');
+var Spotify = require('node-spotify-api');
 // File System package
 var fs = require('fs');
 
