@@ -17,9 +17,24 @@ var userInput = process.argv[3];
 var userInputString = JSON.stringify(userInput);
 
 
-
-
-
+switch (command) {
+    case "movie-this":
+      moviethis();
+      break;
+    
+    case "spotify-this-song":
+      getSpotify();
+      break;
+    
+    case "concert-this":
+      bandsintown();
+      break;
+    
+    case "do-what-it-says":
+      rfmode();
+      break;
+    }
+    
 
 //BANDS IN TOWN
 function bandsintown(){
@@ -33,12 +48,8 @@ axios.get("https://rest.bandsintown.com/artists/" + userInput + "/events?app_id=
    );
     };
 
-if(command === "concert-this"){
-    bandsintown();
-}
-
 //MOVIE-THIS
-if(command === "movie-this"){
+function moviethis(){
 // Run a request with axios to the OMDB API with the movie title
 axios.get("http://www.omdbapi.com/?t=" + userInputString + "&y=&plot=short&tomatoes=true&apikey=trilogy").then(
  function(response) {
@@ -69,59 +80,38 @@ axios.get("http://www.omdbapi.com/?t=" + userInputString + "&y=&plot=short&tomat
     console.log("The movie's plot is: " + response.data.Plot);
     console.log("Actors in this movie are: " + response.data.Actors);
      }
-  }
-);
+    });
 }
 
-// SPOTIFY
-// if (command === "spotify-this-song") {
-// getSpotify();
-// }
 
+//SPOTIFY
+function getSpotify(){
+    var options = new Spotify({
+        id: spotifyID,
+        secret: spotifySecret
+    });
+	console.log("Spotifying your artist...")
+	console.log(userInputString);
 
-// function getSpotify(){
-//     var options = new Spotify({
-//         id: spotifyID,
-//         secret: spotifySecret
-//     });
-// 	console.log("Spotifying your artist...")
-// 	console.log(userInputString);
-  //searches for "The Sign by Ace of Base" if no search term was entered
-// 	if (userInput ===  undefined || userInput ==="") {
-//   console.log("You didn't enter a song, so here's my favorite song!");
-// 	userInput = 'The Sign Ace of Base'
-// 	}; 
+	options.search({ type: 'track', query: userInputString }, function (err, data) {
+	if (err) {
+	  console.log('An error has occurred: ' + err)
+	} else {
+	for (let i = 0; i<data.tracks.items[0].artists.length; i++){
+    	console.log("Artist: " + data.tracks.items[0].artists[i].name);
+ 	}
+	console.log("Song Name: " + data.tracks.items[0].name);
+ 	console.log("Preview: " + data.tracks.items[0].preview_url);
+   	console.log("Album Name: " + (data.tracks.items[0].album.name));
+  }
 
-// 	options.search({ type: 'track', query: userInputString }, function (err, data) {
-// 	if (err) {
-// 	  console.log('An error has occurred: ' + err)
-// 	} else {
-// 	for (let i = 0; i<data.tracks.items[0].artists.length; i++){
-//     	console.log("Artist: " + data.tracks.items[0].artists[i].name);
-//  	}
-// 	console.log("Song Name: " + data.tracks.items[0].name);
-//  	console.log("Preview: " + data.tracks.items[0].preview_url);
-//    	console.log("Album Name: " + (data.tracks.items[0].album.name));
-//   }
-
-//   });
+  });
   
-// };
-
-
-// spotifyApi.setAccessToken('SPOTIFY_SECRET');
-// var spotify = new Spotify(keys.spotify);
-// var spotifyApi = new SpotifyWebApi();
-
-// spotifyApi.setAccessToken('<here_your_access_token>');
-
-// spotifyApi.setPromiseImplementation(Q);
-// var spotifier = Spotify(options);
-
+};
 
 
 //DO WHAT IT SAYS:
-
+function rfmode(){
 fs.readFile("./random.txt", 
              {"encoding": "utf8"}, 
               function(err, data) {
@@ -129,14 +119,10 @@ fs.readFile("./random.txt",
         console.log(err);
      else {
          var contents = data;
-         
-         if (command === "do-what-it-says"){
-            var splitRandom = contents.split(",");
-            
+         var splitRandom = contents.split(",");
             // command = splitRandom[1];
             // userInput = splitRandom[2];
-            console.log(splitRandom);
-
-         }
+            console.log(splitRandom);   
      }
  });
+}
