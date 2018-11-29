@@ -22,7 +22,7 @@ var userInputString = JSON.stringify(mediaName);
 
 var mediaName = process.argv.slice(3).join(" ");
 
-var aPrettyLine = "***-------------------------------***";
+var aPrettyLine = "\n °º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸ \n";
 
 //Implement specific function based on command input
 switch (command) {
@@ -49,7 +49,6 @@ function bandsintown() {
     axios.get("https://rest.bandsintown.com/artists/" + userInputString + "/events?app_id=codingbootcamp").then(
         function (response) {
             console.log(aPrettyLine);
-            
             console.log("Venue Name: " + response.data[0].venue.name);
             console.log("Location: " + response.data[0].venue.city);
             console.log("Next Concert Date: " + moment(response.data[0].datetime).format("LLL"));
@@ -57,7 +56,7 @@ function bandsintown() {
         }
     );
 };
-//http://www.omdbapi.com/?t=" + mediaName + "&y=&plot=short&tomatoes=true&apikey=trilogy
+
 //MOVIE-THIS
 function moviethis() {
     // Run a request with axios to the OMDB API with the movie title 
@@ -82,6 +81,7 @@ function moviethis() {
             // Else find the movie the user entered
             else {
                 console.log(aPrettyLine);
+                console.log(mediaName);
                 console.log("Movie Title: " + response.data.Title);
                 console.log("This movie came out in: " + response.data.Year);
                 console.log("The movie's IMDB rating is: " + response.data.imdbRating);
@@ -115,7 +115,7 @@ function getSpotify() {
                 console.log(aPrettyLine);
                 console.log("Artist: " + data.tracks.items[0].artists[i].name);
                 console.log("Song Name: " + data.tracks.items[0].name);
-                console.log("Preview: " + data.tracks.items[0].preview_url);
+                console.log("Preview: " + data.tracks.items[0].href);
                 console.log("Album Name: " + (data.tracks.items[0].album.name));
                 console.log(aPrettyLine);
             }
@@ -133,8 +133,7 @@ function rfmode() {
             if (err)
                 console.log(err);
             else {
-                var contents = data;
-                var splitRandom = contents.split(",");
+                var splitRandom = data.split(",");
                 command = splitRandom[0];
                 mediaName = splitRandom[1];
                 console.log(command, mediaName);

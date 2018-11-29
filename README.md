@@ -1,3 +1,6 @@
+Her is the video to show functionality!  https://drive.google.com/file/d/1SU5vj30DXFu-wwjXwfaMUv2L7Zera3eg/view
+
+
 **What the project does:
 This app takes in one of 4 commands: concert-this, spotify-this-song, movie-this or do-what-it-says
 and an argument from the user: band name, song title, movie title
