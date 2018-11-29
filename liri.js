@@ -8,6 +8,9 @@ var axios = require("axios");
 var Spotify = require('node-spotify-api');
 // File System package
 var fs = require('fs');
+// Moment JS
+var moment = require('moment');
+moment().format("LLL");
 
 var spotifyID = apiKeys.spotify.id;
 var spotifySecret = apiKeys.spotify.secret;
@@ -46,9 +49,10 @@ function bandsintown() {
     axios.get("https://rest.bandsintown.com/artists/" + userInputString + "/events?app_id=codingbootcamp").then(
         function (response) {
             console.log(aPrettyLine);
+            
             console.log("Venue Name: " + response.data[0].venue.name);
             console.log("Location: " + response.data[0].venue.city);
-            console.log("Venue Name: " + response.data[0].datetime);
+            console.log("Next Concert Date: " + moment(response.data[0].datetime).format("LLL"));
             console.log(aPrettyLine);
         }
     );
