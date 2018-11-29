@@ -53,21 +53,21 @@ function bandsintown() {
         }
     );
 };
-
+//http://www.omdbapi.com/?t=" + mediaName + "&y=&plot=short&tomatoes=true&apikey=trilogy
 //MOVIE-THIS
 function moviethis() {
-    // Run a request with axios to the OMDB API with the movie title
-    axios.get("http://www.omdbapi.com/?t=" + mediaName + "&y=&plot=short&tomatoes=true&apikey=trilogy").then(
+    // Run a request with axios to the OMDB API with the movie title 
+    axios.get("http://www.omdbapi.com/?apikey=trilogy&t=" + mediaName).then(
         function (response) {
             // if response is undefined, return info for "Mr. Nobody"
             if (response.data.Title === undefined) {
-                axios.get("http://www.omdbapi.com/?t=Mr.+Nobody&y=&plot=short&apikey=trilogy").then(
+                axios.get("http://www.omdbapi.com/?t=Mr.+Nobody&apikey=trilogy").then(
                     function (response) {
                         console.log("If you haven't seen Mr. Nobody, you should...");
                         console.log("Movie Title: " + response.data.Title);
                         console.log("This movie came out in: " + response.data.Year);
                         console.log("The movie's IMDB rating is: " + response.data.imdbRating);
-                        console.log("The movie's Tomato rating is: " + response.data.tomatoRating);
+                        console.log("The movie's Tomato rating is: " + response.data.Ratings[1].Value);
                         console.log("The movie was produced in: " + response.data.Country);
                         console.log("The movie's language is: " + response.data.Language);
                         console.log("The movie's plot is: " + response.data.Plot);
@@ -81,7 +81,7 @@ function moviethis() {
                 console.log("Movie Title: " + response.data.Title);
                 console.log("This movie came out in: " + response.data.Year);
                 console.log("The movie's IMDB rating is: " + response.data.imdbRating);
-                console.log("The movie's Tomato rating is: " + response.data.tomatoRating);
+                console.log("The movie's Tomato rating is: " + response.data.Ratings[1].Value);
                 console.log("The movie was produced in: " + response.data.Country);
                 console.log("The movie's language is: " + response.data.Language);
                 console.log("The movie's plot is: " + response.data.Plot);
