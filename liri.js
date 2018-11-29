@@ -131,13 +131,21 @@ function rfmode() {
             else {
                 var contents = data;
                 var splitRandom = contents.split(",");
-                console.log(splitRandom[0] + splitRandom[1]);
-                
-                // if( splitRandom[1] === "concert-this") {
-                //     bandsintown();
-                // }
-                
-                console.log(splitRandom);
+                command = splitRandom[0];
+                mediaName = splitRandom[1];
+                console.log(command, mediaName);
+                if(command === "concert-this") {
+                    bandsintown();
+                }
+                else if(command === "spotify-this-song") {
+                    getSpotify();
+                }
+                else if(command === "movie-this") {
+                    moviethis();
+                }
+                else if(command === "do-what-it-says") {
+                    console.log("not so fast loopy McGee...")
+                }
             }
         });
 }

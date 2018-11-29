@@ -2,7 +2,6 @@
 This app takes in one of 4 commands: concert-this, spotify-this-song, movie-this or do-what-it-says
 and an argument from the user: band name, song title, movie title
 and returns information about the media.
-
 The do-what-it-says function is a stand alone function that calls the text in the random.txt file and runs the specified command and argument without any needed user input.
 
 **Why the project is useful:
